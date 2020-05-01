@@ -8,27 +8,28 @@ public class NumeralConverter {
             return "0";
         }
         StringBuilder result = new StringBuilder();
+        Romans[] romans = Romans.values();
         float left = arabicNumber;
         while (left > 0) {
-            for (int index = RomanNumerals.getSize() - 1; index >= 0; index--) {
-                float divide = left / RomanNumerals.getArabic(index);
-                if (divide >= 0.9f & left / RomanNumerals.getArabic(index) < 1f) {
-                    result.append(RomanNumerals.getRoman(index - 2));
-                    result.append(RomanNumerals.getRoman(index));
-                    left -= RomanNumerals.getArabic(index) * 0.9;
+            for (int index = romans.length - 1; index >= 0; index--) {
+                float divide = left / romans[index].getArabicValue();
+                if (divide >= 0.9f & left / romans[index].getArabicValue() < 1f) {
+                    result.append(romans[index - 2]);
+                    result.append(romans[index]);
+                    left -= romans[index].getArabicValue() * 0.9;
                     break;
                 }
                 if (divide >= 4) {
-                    result.append(RomanNumerals.getRoman(index));
-                    result.append(RomanNumerals.getRoman(index + 1));
-                    left -= RomanNumerals.getArabic(index) * 4;
+                    result.append(romans[index]);
+                    result.append(romans[index + 1]);
+                    left -= romans[index].getArabicValue() * 4;
                     break;
                 }
                 if (divide >= 1) {
                     for (int i = 0; i < (int)divide; i++) {
-                        result.append(RomanNumerals.getRoman(index));
+                        result.append(romans[index]);
                     }
-                    left -= RomanNumerals.getArabic(index) * (int)divide;
+                    left -= romans[index].getArabicValue() * (int)divide;
                     break;
                 }
             }
